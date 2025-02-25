@@ -4,10 +4,10 @@ const { PostgresDialect } = require('@sequelize/postgres')
 const logger = require('pino')()
 
 // User-defined modules
-const errorMessages = require('./error-messages')
+const messages = require('./messages.js')
 
 // Variables
-const port = process.env.PORT || 8080
+const port = process.env.WEB_PORT || 8080
 
 const sequelize = new Sequelize({
   dialect: PostgresDialect,
@@ -16,33 +16,36 @@ const sequelize = new Sequelize({
   clientMinMessages: 'notice'
 })
 
-logger.info(`Server start requested on port ${port}.`)
+logger.info(messages('startRequested', `${port}.`))
 
-// Validate PostgreSQL connection
-sequelize.sync().then(() => {
-  logger.info('Database test connection successful.')
+// Validate database connection
+sequelize
+  .authenticate()
+  .then(() => {
+    logger.info(messages('dbTestConnectionSuccess'))
 
-  sequelize.close().catch(err => {
-    logger.error(errorMessages('dbConnectionFailed', `${err}.`))
+    sequelize.close().catch(err => {
+      logger.error(messages('dbTestCloseConnectionFail', `${err}.`))
+      process.exit(1)
+    })
+
+    const app = require('./app')
+    app.listen(port, () => {
+      logger.info(`Server has been started on port ${port}.`)
+    })
+  })
+  .catch(err => {
+    logger.error(messages('dbTestConnectionFail', `${err}.`))
+    logger.error('The server cannot be started without a functioning database.')
     process.exit(1)
   })
 
-  const app = require('./app')
-  app.listen(port, () => {
-    logger.info(`Server has been started on port ${port}.`)
-  })
-}).catch(err => {
-  logger.error(errorMessages('dbConnectionFailed', `${err}.`))
-  logger.error('The server cannot be started without a functioning database.')
-  process.exit(1)
-})
-
 process.on('uncaughtException', err => {
-  logger.error(errorMessages('unhandledException', err))
+  logger.error(messages('unhandledException', `${err}`))
   process.exit(1)
 })
 
 process.on('unhandledRejection', (reason, promise) => {
-  logger.error(errorMessages('unhandledRejection', `at ${promise}. Reason: ${reason}.`))
+  logger.error(messages('unhandledRejection', `at ${promise}. Reason: ${reason}.`))
   process.exit(1)
 })
