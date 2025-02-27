@@ -1,5 +1,10 @@
+/*
+  Users table model:
+    | userId | username | email | password
+*/
+
 module.exports = (sequelize, DataTypes) => {
-  const Users = sequelize.define('users', {
+  sequelize.define('users', {
     userId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -23,6 +28,4 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
   })
-
-  return Users
 }
