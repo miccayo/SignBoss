@@ -1,9 +1,19 @@
-# SignBoss
+## SignBoss
  A simple web-based digital signage solution built for small businesses.
 
-# Stack
-- PostgreSQL Database
-- Node.js Express
-- Pug View Engine
+## Technologies
+- PostgreSQL
+- Express
+- Sequelize
+- Pug
 
-Utilizes Argon2 for user authentication.
+## Database Tables
+### Table `users`
+| Columns | Description |
+| --- | --- |
+| userid | The user's ID |
+| username | The user's username |
+| password | The user's hashed password |
+| email | The user's email address |
+| firstname | The user's first name |
+| lastname | The user's last name |

@@ -3,13 +3,16 @@
     | userId | username | email | password
 */
 
-module.exports = (sequelize, DataTypes) => {
-  sequelize.define('users', {
+const { DataTypes } = require('@sequelize/core')
+
+module.exports = (sequelize) => {
+  const User = sequelize.define('users', {
     userId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       unique: true,
+      allowNull: false,
       comment: 'Unique user identifier.'
     },
     username: {
@@ -21,6 +24,9 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isEmail: true
+      },
       unique: true
     },
     password: {
@@ -28,4 +34,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
   })
+
+  return User
 }

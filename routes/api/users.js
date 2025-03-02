@@ -1,14 +1,20 @@
+// Node modules
+const logger = require('pino')()
 const express = require('express')
 const router = express.Router()
-
-const users = require('../../models/user.js')
+const { User } = require('../../models')
+// const argon2 = require('argon2')
 
 // To create a new user
 router.post('/signup', (req, res) => {
+  const { username, email, password } = req.body
+  if (!username || !email || !password) {
+    return res.status(400).json({ error: 'Invalid data' })
+  }
   // User data validation
 
   // User creation
-  users.create({
+  User.create({
     username: req.body.username,
     email: req.body.email,
     password: req.body.password
@@ -21,15 +27,12 @@ router.post('/signup', (req, res) => {
 
 // To get user information
 router.get('/:id', (req, res) => {
+  logger.info(`User ID: ${req.params.id}`)
   // User data retrieval
-  users.findOne({
+  User.findAll({
     where: { userId: req.params.id }
-  }).then(user => {
-    if (user) {
-      res.status(200).json(user)
-    } else {
-      res.status(404).json({ error: 'User not found' })
-    }
+  }).then(users => {
+    res.status(200).json(users)
   }).catch(err => {
     res.status(400).json({ error: err.message })
   })

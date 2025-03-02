@@ -1,17 +1,16 @@
-// Node modules
+// Modules
 const logger = require('pino')()
-
-// User-defined modules
-const messages = require('./config/messages.js')
+const messages = require('./config/messages')
 
 // Variables
+const app = require('./app')
 const port = process.env.WEB_PORT || 8080
 
+// App start
 logger.info(messages('startRequested', `${port}.`))
 
-const app = require('./app.js')
 app.listen(port, () => {
-  logger.info(`Server has been started on port ${port}.`)
+  logger.info(messages('startSuccess', `${port}.`))
 })
 
 process.on('uncaughtException', err => {

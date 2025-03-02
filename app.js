@@ -1,28 +1,15 @@
 // Node modules
-const { Sequelize, DataTypes } = require('@sequelize/core')
-const { PostgresDialect } = require('@sequelize/postgres')
 const express = require('express')
+const bodyParser = require('body-parser')
+// const cookieParser = require('cookie-parser')
+// const session = require('express-session')
+// const passport = require('passport')
 // const logger = require('pino')()
-
-// User-defined modules
-// const messages = require('./config/messages.js')
-// const db = require('./models')
-
-// Routes
-const userApiRoutes = require('./routes/api/users.js')
+const path = require('path')
+const routes = require('./routes')
+// const messages = require('./config/messages')
 
 const app = express()
-
-// Establish database connection
-const sequelize = new Sequelize({
-  dialect: PostgresDialect,
-  url: `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
-  ssl: (process.env.DB_USE_SSL === 'true'),
-  clientMinMessages: 'notice'
-})
-
-// Database Models
-require('./models/user')(sequelize, DataTypes) // Users table model
 
 // App enables
 app.enable('json escape')
@@ -34,8 +21,13 @@ app.disable('x-powered-by')
 
 // App set
 app.set('view engine', 'pug')
+app.set('views', path.join(__dirname, 'views'))
+
+// Middleware
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(bodyParser.urlencoded({ extended: false }))
 
 // App use
-app.use('/api/users', userApiRoutes)
+app.use('/', routes)
 
 module.exports = app
