@@ -7,6 +7,9 @@
 - Sequelize
 - Pug
 
+## To run locally
+Use `npm run local` after configuring your .env file.
+
 ## Database Tables
 ### Table `users`
 | Columns | Description |
