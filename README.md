@@ -1,5 +1,5 @@
 ## SignBoss
- A simple web-based digital signage solution built for small businesses.
+ A simple web-based digital signage solution built for small businesses and enthusiasts. Inspired by [PiSignage](https://pisignage.com/).
 
 ## Technologies
 - PostgreSQL
