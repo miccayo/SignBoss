@@ -1,0 +1,24 @@
+{
+  "name": "signboss",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "scripts": {
+    "dev": "dotenvx run -f .env.dev -- bun server.ts"
+  },
+  "dependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/express": "^5.0.0",
+    "@types/pino": "^7.0.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0"
+  }
+}
