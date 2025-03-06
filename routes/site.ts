@@ -3,9 +3,11 @@ const siteRoutes = express.Router();
 
 // Import API routes
 import { usersPages } from './site/users.ts';
+import { authPages } from './site/auth.ts';
 
 // Set routes
 siteRoutes.use('/users', usersPages);
+siteRoutes.use('/auth', authPages);
 
 // Index page
 siteRoutes.get('/', (req, res) => {

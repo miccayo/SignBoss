@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     <%- include ('common/head.ejs'); %>
-    <meta http-equiv="refresh" content="<%- redirectTime %>;URL='/login'" />
   </head>
   <style>
     .centered {
@@ -18,11 +17,11 @@
   <body class="d-flex align-items-center py-4 bg-body-tertiary">
     <main class="centered w-100 m-auto">
       <h1>SignBoss</h1>
-      <p>Redirecting to sign in... (or click <a href="/login" class="text-reset">here</a>).</p>
+      <p>Redirecting to sign in... (or click <a href="/auth/login" class="text-reset">here</a>).</p>
     </main>
     <script type="text/javascript">
       setTimeout(function() {
-        window.location.href = '/login';
+        window.location.href = '/auth/login';
       }, <%- redirectTime %>000);
     </script>
     <%- include ('common/body.ejs'); %>
