@@ -9,7 +9,7 @@ siteRoutes.use('/users', usersPages);
 
 // Index page
 siteRoutes.get('/', (req, res) => {
-  res.render('landing', { title: 'Home' });
+  res.render('landing', { title: 'Home', redirectTime: 3 });
 });
 
 export { siteRoutes };

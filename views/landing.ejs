@@ -2,10 +2,29 @@
 <html lang="en">
   <head>
     <%- include ('common/head.ejs'); %>
+    <meta http-equiv="refresh" content="<%- redirectTime %>;URL='/login'" />
   </head>
-  <body>
-    hello
+  <style>
+    .centered {
+      max-width: 330px;
+      padding: 1rem;
+      text-align: center;
+    }
 
+    html, body {
+      height: 100%;
+    }
+  </style>
+  <body class="d-flex align-items-center py-4 bg-body-tertiary">
+    <main class="centered w-100 m-auto">
+      <h1>SignBoss</h1>
+      <p>Redirecting to sign in... (or click <a href="/login" class="text-reset">here</a>).</p>
+    </main>
+    <script type="text/javascript">
+      setTimeout(function() {
+        window.location.href = '/login';
+      }, <%- redirectTime %>000);
+    </script>
     <%- include ('common/body.ejs'); %>
   </body>
 </html>
