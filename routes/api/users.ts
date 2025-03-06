@@ -4,9 +4,24 @@ import express from 'express';
 const usersApi = express.Router();
 const logger = pino(pino_pretty());
 
+import { db } from '../../models';
+
 // Fetch user information
 usersApi.get('/:id', (req, res) => {
-  res.send('Hello World!');
+  db.user.findOne({
+    where: {
+      user_id: req.params.id
+    }
+  }).then((user) => {
+    if (user === null) {
+      res.json({ error: 'User not found' });
+    } else {
+      res.json(user);
+    }
+  }).catch((err: any) => {
+    logger.error(err);
+    res.json({ error: 'An error occurred' });
+  });
 });
 
 // Create new users
