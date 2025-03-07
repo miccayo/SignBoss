@@ -5,7 +5,7 @@
 import { Sequelize, DataTypes } from '@sequelize/core'
 
 function loadModel(sequelize: Sequelize) {
-  const User = sequelize.define('users', {
+  const User = sequelize.define('user', {
     user_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -20,17 +20,29 @@ function loadModel(sequelize: Sequelize) {
       unique: true,
       comment: 'Unique username.'
     },
+    first_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      comment: 'First name.'
+    },
+    last_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      comment: 'Last name.'
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         isEmail: true
       },
-      unique: true
+      unique: true,
+      comment: 'Unique email address.'
     },
     password_hash: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      comment: 'Hashed password.'
     }
   })
 
